@@ -69,8 +69,8 @@ namespace CSPong
         const u32 maxRunNum = 5;
         const u32 runTime = 5; // seconds
         const u32 k_minParticles = 0;
-        const u32 k_maxParticles = 0;
-        const u32 k_particlesStep = 500;
+        const u32 k_maxParticles = 10000;
+        const u32 k_particlesStep = 1000;
     }
     
     //---------------------------------------------------------

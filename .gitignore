@@ -34,3 +34,5 @@ CSPong/Projects/Windows/UpgradeLog.htm
 CSPong/Projects/Windows/profile.txt
 CSPong/Projects/Android/cspong/.idea/
 CSPong/Content/AppResources/Particles/SmokeStream/Generated/
+*.vspx
+*.vsp

@@ -165,6 +165,7 @@
       <AdditionalDependencies>%(AdditionalDependencies);opengl32.lib;winmm.lib;XAudio2.lib;zlibstat.lib;glew32s.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;ck.lib;CSBase.lib;ChilliSource.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -201,6 +202,7 @@
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Command>
