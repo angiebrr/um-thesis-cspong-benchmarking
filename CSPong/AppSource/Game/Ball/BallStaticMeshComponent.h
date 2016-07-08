@@ -35,183 +35,183 @@
 
 namespace CSPong
 {
-	//===============================================================
-	/// Description:
-	///
-	/// A static mesh component. This defines a 3D mesh that can
-	/// be manipulated, textured but not animated.
-	//===============================================================
-	class BallStaticMeshComponent : public CS::RenderComponent
-	{
-	public:
-		CS_DECLARE_NAMEDTYPE(BallStaticMeshComponent);
+    //===============================================================
+    /// Description:
+    ///
+    /// A static mesh component. This defines a 3D mesh that can
+    /// be manipulated, textured but not animated.
+    //===============================================================
+    class BallStaticMeshComponent : public CS::RenderComponent
+    {
+    public:
+        CS_DECLARE_NAMEDTYPE(BallStaticMeshComponent);
 
-		BallStaticMeshComponent();
-		//----------------------------------------------------------
-		/// Is A
-		///
-		/// Returns if it is of the type given
-		/// @param Comparison Type
-		/// @return Whether the class matches the comparison type
-		//----------------------------------------------------------
-		bool IsA(CS::InterfaceIDType inInterfaceID) const override;
-		//----------------------------------------------------
-		/// Get Axis Aligned Bounding Box
-		///
-		/// All render components have a box used for culling
-		/// and coarse intersections. This is cached and 
-		/// recomputed when required.
-		/// @return Axis aligned bounding box
-		//----------------------------------------------------
-		const CS::AABB& GetAABB() override;
-		//----------------------------------------------------
-		/// Get Object Oriented Bounding Box
-		///
-		/// All render objects have an OOBB for
-		/// picking. This is cached and 
-		/// recomputed when required.
-		/// @return OOBB
-		//----------------------------------------------------
-		const CS::OOBB& GetOOBB() override;
-		//----------------------------------------------------
-		/// Get Bounding Sphere
-		///
-		/// All render objects have an bounding sphere for
-		/// culling. This is cached and 
-		/// recomputed when required.
-		/// @return bounding sphere
-		//----------------------------------------------------
-		const CS::Sphere& GetBoundingSphere() override;
-		//-----------------------------------------------------------
-		/// Is Transparent
-		///
-		/// Returns whether or not this component has any transparency
-		///
-		/// @return whether or not this has transparency
-		//-----------------------------------------------------------
-		bool IsTransparent() override;
-		//-----------------------------------------------------------
-		/// Set Material
-		///
-		/// Set the material that the mesh will use. Applies the material
-		/// To all submeshes
-		///
-		/// @param Handle to material
-		//-----------------------------------------------------------
-		void SetMaterial(const CS::MaterialCSPtr& inpMaterial) override;
-		//-----------------------------------------------------------
-		/// Set Material For Sub Mesh
-		///
-		/// Set the material that one sub mesh will use.
-		///
-		/// @param Handle to material
-		/// @Param Index to the submesh
-		//-----------------------------------------------------------
-		void SetMaterialForSubMesh(const CS::MaterialCSPtr& inpMaterial, u32 indwSubMeshIndex);
-		//-----------------------------------------------------------
-		/// Set Material For Sub Mesh
-		///
-		/// Set the material that one sub mesh will use.
-		///
-		/// @param Handle to material
-		/// @param The name of the submesh.
-		//-----------------------------------------------------------
-		void SetMaterialForSubMesh(const CS::MaterialCSPtr& inpMaterial, const std::string& instrSubMeshName);
-		//-----------------------------------------------------------
-		/// Get Material Of Sub Mesh
-		///
-		/// Get the material of a single sub mesh.
-		///
-		/// @param Index to the sub mesh
-		/// @return Handle to material
-		//-----------------------------------------------------------
-		CS::MaterialCSPtr GetMaterialOfSubMesh(u32 indwSubMeshIndex) const;
-		//-----------------------------------------------------------
-		/// Get Material Of Sub Mesh
-		///
-		/// Get the material of a single sub mesh.
-		///
-		/// @param The name of the submesh.
-		/// @return Handle to material
-		//-----------------------------------------------------------
-		CS::MaterialCSPtr GetMaterialOfSubMesh(const std::string& instrSubMeshName) const;
-		//----------------------------------------------------------
-		/// Attach Mesh
-		///
-		/// Attach a mesh to this component
-		/// @param Mesh object
-		//----------------------------------------------------------
-		void AttachMesh(const CS::MeshCSPtr& inpModel);
-		//----------------------------------------------------------
-		/// Attach Mesh
-		///
-		/// Attach a mesh to this component but uses the given 
-		/// material
-		/// @param Mesh object
-		//----------------------------------------------------------
-		void AttachMesh(const CS::MeshCSPtr& inpModel, const CS::MaterialCSPtr& inpMaterial);
-		//----------------------------------------------------------
-		/// Get Mesh
-		///
-		/// @return The components internal mesh
-		//----------------------------------------------------------
-		const CS::MeshCSPtr& GetMesh() const;
+        BallStaticMeshComponent();
+        //----------------------------------------------------------
+        /// Is A
+        ///
+        /// Returns if it is of the type given
+        /// @param Comparison Type
+        /// @return Whether the class matches the comparison type
+        //----------------------------------------------------------
+        bool IsA(CS::InterfaceIDType inInterfaceID) const override;
+        //----------------------------------------------------
+        /// Get Axis Aligned Bounding Box
+        ///
+        /// All render components have a box used for culling
+        /// and coarse intersections. This is cached and 
+        /// recomputed when required.
+        /// @return Axis aligned bounding box
+        //----------------------------------------------------
+        const CS::AABB& GetAABB() override;
+        //----------------------------------------------------
+        /// Get Object Oriented Bounding Box
+        ///
+        /// All render objects have an OOBB for
+        /// picking. This is cached and 
+        /// recomputed when required.
+        /// @return OOBB
+        //----------------------------------------------------
+        const CS::OOBB& GetOOBB() override;
+        //----------------------------------------------------
+        /// Get Bounding Sphere
+        ///
+        /// All render objects have an bounding sphere for
+        /// culling. This is cached and 
+        /// recomputed when required.
+        /// @return bounding sphere
+        //----------------------------------------------------
+        const CS::Sphere& GetBoundingSphere() override;
+        //-----------------------------------------------------------
+        /// Is Transparent
+        ///
+        /// Returns whether or not this component has any transparency
+        ///
+        /// @return whether or not this has transparency
+        //-----------------------------------------------------------
+        bool IsTransparent() override;
+        //-----------------------------------------------------------
+        /// Set Material
+        ///
+        /// Set the material that the mesh will use. Applies the material
+        /// To all submeshes
+        ///
+        /// @param Handle to material
+        //-----------------------------------------------------------
+        void SetMaterial(const CS::MaterialCSPtr& inpMaterial) override;
+        //-----------------------------------------------------------
+        /// Set Material For Sub Mesh
+        ///
+        /// Set the material that one sub mesh will use.
+        ///
+        /// @param Handle to material
+        /// @Param Index to the submesh
+        //-----------------------------------------------------------
+        void SetMaterialForSubMesh(const CS::MaterialCSPtr& inpMaterial, u32 indwSubMeshIndex);
+        //-----------------------------------------------------------
+        /// Set Material For Sub Mesh
+        ///
+        /// Set the material that one sub mesh will use.
+        ///
+        /// @param Handle to material
+        /// @param The name of the submesh.
+        //-----------------------------------------------------------
+        void SetMaterialForSubMesh(const CS::MaterialCSPtr& inpMaterial, const std::string& instrSubMeshName);
+        //-----------------------------------------------------------
+        /// Get Material Of Sub Mesh
+        ///
+        /// Get the material of a single sub mesh.
+        ///
+        /// @param Index to the sub mesh
+        /// @return Handle to material
+        //-----------------------------------------------------------
+        CS::MaterialCSPtr GetMaterialOfSubMesh(u32 indwSubMeshIndex) const;
+        //-----------------------------------------------------------
+        /// Get Material Of Sub Mesh
+        ///
+        /// Get the material of a single sub mesh.
+        ///
+        /// @param The name of the submesh.
+        /// @return Handle to material
+        //-----------------------------------------------------------
+        CS::MaterialCSPtr GetMaterialOfSubMesh(const std::string& instrSubMeshName) const;
+        //----------------------------------------------------------
+        /// Attach Mesh
+        ///
+        /// Attach a mesh to this component
+        /// @param Mesh object
+        //----------------------------------------------------------
+        void AttachMesh(const CS::MeshCSPtr& inpModel);
+        //----------------------------------------------------------
+        /// Attach Mesh
+        ///
+        /// Attach a mesh to this component but uses the given 
+        /// material
+        /// @param Mesh object
+        //----------------------------------------------------------
+        void AttachMesh(const CS::MeshCSPtr& inpModel, const CS::MaterialCSPtr& inpMaterial);
+        //----------------------------------------------------------
+        /// Get Mesh
+        ///
+        /// @return The components internal mesh
+        //----------------------------------------------------------
+        const CS::MeshCSPtr& GetMesh() const;
 
-	private:
-		//----------------------------------------------------------
-		/// Render
-		///
-		/// NotifyConnections render on objects mesh
-		///
-		/// @param Render system
-		/// @param Active camera component
-		/// @param The current shader pass.
-		//----------------------------------------------------------
-		void Render(CS::RenderSystem* inpRenderSystem, CS::CameraComponent* inpCam, CS::ShaderPass ineShaderPass) override;
-		//-----------------------------------------------------
-		/// Render Shadow Map
-		///
-		/// Render the mesh to the shadow map
-		///
-		/// @param Render system
-		/// @param Active camera component
-		/// @param Material to render static shadows with
-		/// @param Material to render skinned shadows with
-		//-----------------------------------------------------
-		void RenderShadowMap(CS::RenderSystem* inpRenderSystem, CS::CameraComponent* inpCam, const CS::MaterialCSPtr& in_staticShadowMap, const CS::MaterialCSPtr& in_animShadowMap) override;
-		//----------------------------------------------------
-		/// Triggered when the component is attached to
-		/// an entity on the scene
-		///
-		/// @author S Downie
-		//----------------------------------------------------
-		void OnAddedToScene() override;
-		//----------------------------------------------------
-		/// On Entity Transform Changed
-		///
-		/// Delegate called when the owning entities transform
-		/// changes. This is used to dirty the bounding volumes
-		//----------------------------------------------------
-		void OnEntityTransformChanged();
-		//----------------------------------------------------
-		/// Triggered when the component is removed from
-		/// an entity on the scene
-		///
-		/// @author S Downie
-		//----------------------------------------------------
-		void OnRemovedFromScene() override;
+    private:
+        //----------------------------------------------------------
+        /// Render
+        ///
+        /// NotifyConnections render on objects mesh
+        ///
+        /// @param Render system
+        /// @param Active camera component
+        /// @param The current shader pass.
+        //----------------------------------------------------------
+        void Render(CS::RenderSystem* inpRenderSystem, CS::CameraComponent* inpCam, CS::ShaderPass ineShaderPass) override;
+        //-----------------------------------------------------
+        /// Render Shadow Map
+        ///
+        /// Render the mesh to the shadow map
+        ///
+        /// @param Render system
+        /// @param Active camera component
+        /// @param Material to render static shadows with
+        /// @param Material to render skinned shadows with
+        //-----------------------------------------------------
+        void RenderShadowMap(CS::RenderSystem* inpRenderSystem, CS::CameraComponent* inpCam, const CS::MaterialCSPtr& in_staticShadowMap, const CS::MaterialCSPtr& in_animShadowMap) override;
+        //----------------------------------------------------
+        /// Triggered when the component is attached to
+        /// an entity on the scene
+        ///
+        /// @author S Downie
+        //----------------------------------------------------
+        void OnAddedToScene() override;
+        //----------------------------------------------------
+        /// On Entity Transform Changed
+        ///
+        /// Delegate called when the owning entities transform
+        /// changes. This is used to dirty the bounding volumes
+        //----------------------------------------------------
+        void OnEntityTransformChanged();
+        //----------------------------------------------------
+        /// Triggered when the component is removed from
+        /// an entity on the scene
+        ///
+        /// @author S Downie
+        //----------------------------------------------------
+        void OnRemovedFromScene() override;
 
-	private:
+    private:
 
-		CS::MeshCSPtr mpModel;
-		std::vector<CS::MaterialCSPtr> mMaterials;
+        CS::MeshCSPtr mpModel;
+        std::vector<CS::MaterialCSPtr> mMaterials;
 
-		CS::EventConnectionUPtr m_transformChangedConnection;
+        CS::EventConnectionUPtr m_transformChangedConnection;
 
-		bool m_isBSValid;
-		bool m_isAABBValid;
-		bool m_isOOBBValid;
-	};
+        bool m_isBSValid;
+        bool m_isAABBValid;
+        bool m_isOOBBValid;
+    };
 }
 
 #endif

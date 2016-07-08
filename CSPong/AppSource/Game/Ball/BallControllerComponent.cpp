@@ -68,10 +68,10 @@ namespace CSPong
         {
             m_active = true;
 
-			//Always go at angle 3pi/4 (bottom right corner)
-			f32 angle = (CS::MathUtils::k_pi * 0.75);
-			m_currentDirection.x = std::sin(angle);
-			m_currentDirection.y = std::cos(angle);
+            //Always go at angle 3pi/4 (bottom right corner)
+            f32 angle = (CS::MathUtils::k_pi * 0.75);
+            m_currentDirection.x = std::sin(angle);
+            m_currentDirection.y = std::cos(angle);
             
             m_dynamicBodyComponent->ApplyImpulse(m_currentDirection * k_initialImpulse);
         }

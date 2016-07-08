@@ -144,8 +144,8 @@ namespace CSPong
         CS::EntitySPtr ball(CS::Entity::Create());
         
         auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
-		BallStaticMeshComponentSPtr meshComponent(new BallStaticMeshComponent());
-		meshComponent->AttachMesh(mesh, material);
+        BallStaticMeshComponentSPtr meshComponent(new BallStaticMeshComponent());
+        meshComponent->AttachMesh(mesh, material);
         ball->AddComponent(meshComponent);
         
         CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
@@ -157,8 +157,8 @@ namespace CSPong
         
         m_scoringSystem->AddBallBody(dynamicBody);
 
-		auto particleECFSystem = CS::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
-		particleECFSystem->AddBallParticles(ball);
+        auto particleECFSystem = CS::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+        particleECFSystem->AddBallParticles(ball);
         
         return ball;
     }
@@ -195,18 +195,18 @@ namespace CSPong
         
         CS::EntitySPtr leftEdge(CS::Entity::Create());
         leftEdge->GetTransform().SetPosition(CS::Vector3(-k_arenaDimensions.x * 0.5f - k_border * 0.5f, 0.0f, 0.0f));
-		StaticBodyComponentSPtr leftEdgeStaticBody(new StaticBodyComponent(m_physicsSystem, CS::Vector2(k_border, k_arenaDimensions.y + k_border * 2.0f)));
+        StaticBodyComponentSPtr leftEdgeStaticBody(new StaticBodyComponent(m_physicsSystem, CS::Vector2(k_border, k_arenaDimensions.y + k_border * 2.0f)));
         TriggerComponentSPtr leftEdgeTrigger(new TriggerComponent(m_physicsSystem, CS::Vector2(k_border * 2.0f, k_arenaDimensions.y)));
-		leftEdge->AddComponent(leftEdgeStaticBody);
+        leftEdge->AddComponent(leftEdgeStaticBody);
         leftEdge->AddComponent(leftEdgeTrigger);
         arena->AddEntity(leftEdge);
         
         CS::EntitySPtr rightEdge(CS::Entity::Create());
         rightEdge->GetTransform().SetPosition(CS::Vector3(k_arenaDimensions.x * 0.5f + k_border * 0.5f, 0.0f, 0.0f));
-		StaticBodyComponentSPtr rightEdgeStaticBody(new StaticBodyComponent(m_physicsSystem, CS::Vector2(k_border, k_arenaDimensions.y + k_border * 2.0f)));
+        StaticBodyComponentSPtr rightEdgeStaticBody(new StaticBodyComponent(m_physicsSystem, CS::Vector2(k_border, k_arenaDimensions.y + k_border * 2.0f)));
         TriggerComponentSPtr rightEdgeTrigger(new TriggerComponent(m_physicsSystem, CS::Vector2(k_border * 2.0f, k_arenaDimensions.y)));
-		rightEdge->AddComponent(rightEdgeStaticBody);
-		rightEdge->AddComponent(rightEdgeTrigger);
+        rightEdge->AddComponent(rightEdgeStaticBody);
+        rightEdge->AddComponent(rightEdgeTrigger);
         arena->AddEntity(rightEdge);
         
         m_scoringSystem->AddGoalTrigger(leftEdge, 1);

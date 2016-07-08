@@ -108,14 +108,14 @@ namespace CSPong
         
         m_goaltriggers[in_playerIndex] = in_trigger.get();
     }
-	//------------------------------------------------
-	//------------------------------------------------
-	u32 ScoringSystem::GetScore(u32 in_playerIndex)
-	{
-		CS_ASSERT(in_playerIndex < k_numPlayers, "Index out of range");
+    //------------------------------------------------
+    //------------------------------------------------
+    u32 ScoringSystem::GetScore(u32 in_playerIndex)
+    {
+        CS_ASSERT(in_playerIndex < k_numPlayers, "Index out of range");
 
-		return m_scores[in_playerIndex];
-	}
+        return m_scores[in_playerIndex];
+    }
     //------------------------------------------------
     //------------------------------------------------
     void ScoringSystem::OnBallHitTrigger(CS::Entity* in_trigger)

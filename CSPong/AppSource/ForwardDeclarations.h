@@ -34,7 +34,7 @@
 namespace CSPong
 {
     CS_FORWARDDECLARE_CLASS(BallControllerComponent);
-	CS_FORWARDDECLARE_CLASS(BallStaticMeshComponent);
+    CS_FORWARDDECLARE_CLASS(BallStaticMeshComponent);
     CS_FORWARDDECLARE_CLASS(CameraTiltComponent);
     CS_FORWARDDECLARE_CLASS(DynamicBodyComponent);
     CS_FORWARDDECLARE_CLASS(GameEntityFactory);
@@ -44,8 +44,8 @@ namespace CSPong
     CS_FORWARDDECLARE_CLASS(TouchControllerComponent);
     CS_FORWARDDECLARE_CLASS(TransitionSystem);
     CS_FORWARDDECLARE_CLASS(TriggerComponent);
-	CS_FORWARDDECLARE_CLASS(ParticleEffectComponentFactory);
-	enum class ParticleType;
+    CS_FORWARDDECLARE_CLASS(ParticleEffectComponentFactory);
+    enum class ParticleType;
 }
 
 #endif

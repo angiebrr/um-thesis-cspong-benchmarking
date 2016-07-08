@@ -44,11 +44,11 @@
 
 namespace CSPong
 {
-	namespace
-	{
-		const bool k_bSaveShiny = false;
-	}
-	
+    namespace
+    {
+        const bool k_bSaveShiny = false;
+    }
+    
     //------------------------------------------------------
     //------------------------------------------------------
     void GameState::CreateSystems()
@@ -57,7 +57,7 @@ namespace CSPong
         m_physicsSystem = CreateSystem<PhysicsSystem>();
         m_scoringSystem = CreateSystem<ScoringSystem>();
         m_gameEntityFactory = CreateSystem<GameEntityFactory>(m_physicsSystem, m_scoringSystem);
-		m_metricsSystem = CS::Application::Get()->GetSystem<CSProfiling::MetricsSystem>();
+        m_metricsSystem = CS::Application::Get()->GetSystem<CSProfiling::MetricsSystem>();
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
@@ -79,24 +79,17 @@ namespace CSPong
         
         m_ball = m_gameEntityFactory->CreateBall();
         GetScene()->Add(m_ball);
-        
-        m_scoreChangedConnection = m_scoringSystem->GetScoreChangedEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnGoalScored));
+
         m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([=]()
         {
             m_ball->GetComponent<BallControllerComponent>()->Activate();
-			m_metricsSystem->StartTimer();
+            m_metricsSystem->StartTimer();
         });
-    }
-    //------------------------------------------------------------
-    //------------------------------------------------------------
-    void GameState::OnGoalScored(const ScoringSystem::Scores& in_scores)
-    {
-		m_metricsSystem->UpdateSidesHit(in_scores[0], in_scores[1]);
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
     void GameState::OnDestroy()
     {
-        m_scoreChangedConnection.reset();
+        
     }
 }

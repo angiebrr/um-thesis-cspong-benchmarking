@@ -38,80 +38,80 @@
 
 namespace CSPong
 {
-	CS_DEFINE_NAMEDTYPE(ParticleEffectComponentFactory);
+    CS_DEFINE_NAMEDTYPE(ParticleEffectComponentFactory);
 
-	//---------------------------------------------------
-	//---------------------------------------------------
-	ParticleEffectComponentFactoryUPtr ParticleEffectComponentFactory::Create()
-	{
-		return ParticleEffectComponentFactoryUPtr(new ParticleEffectComponentFactory());
-	}
-	//---------------------------------------------------
-	//---------------------------------------------------
-	void ParticleEffectComponentFactory::OnDestroy()
-	{
-		ReleaseCollisionConnections();
-	}
-	//----------------------------------------------------------
-	//----------------------------------------------------------
-	ParticleEffectComponentFactory::ParticleEffectComponentFactory()
-	{
+    //---------------------------------------------------
+    //---------------------------------------------------
+    ParticleEffectComponentFactoryUPtr ParticleEffectComponentFactory::Create()
+    {
+        return ParticleEffectComponentFactoryUPtr(new ParticleEffectComponentFactory());
+    }
+    //---------------------------------------------------
+    //---------------------------------------------------
+    void ParticleEffectComponentFactory::OnDestroy()
+    {
+        ReleaseCollisionConnections();
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+    ParticleEffectComponentFactory::ParticleEffectComponentFactory()
+    {
 
-	}
-	//----------------------------------------------------------
-	//----------------------------------------------------------
-	bool ParticleEffectComponentFactory::IsA(CS::InterfaceIDType in_interfaceId) const
-	{
-		return in_interfaceId == ParticleEffectComponentFactory::InterfaceID;
-	}
-	//----------------------------------------------------------
-	//----------------------------------------------------------
-	void ParticleEffectComponentFactory::ReleaseCollisionConnections()
-	{
-		for (std::vector<CS::EventConnectionSPtr>::size_type i = 0; i != m_collisionConnections.size(); i++)
-		{
-			m_collisionConnections[i].reset();
-		}
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+    bool ParticleEffectComponentFactory::IsA(CS::InterfaceIDType in_interfaceId) const
+    {
+        return in_interfaceId == ParticleEffectComponentFactory::InterfaceID;
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+    void ParticleEffectComponentFactory::ReleaseCollisionConnections()
+    {
+        for (std::vector<CS::EventConnectionSPtr>::size_type i = 0; i != m_collisionConnections.size(); i++)
+        {
+            m_collisionConnections[i].reset();
+        }
 
-		m_collisionConnections.clear();
-	}
-	//----------------------------------------------------------
-	//----------------------------------------------------------
-	CS::ParticleEffectComponentSPtr ParticleEffectComponentFactory::CreateOnCollisionParticleEffectComponent(const ParticleType in_particleType, CS::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& in_collisionEvent)
-	{
-		CS::ParticleEffectComponentSPtr particleEffectComponent = CreateParticleEffectComponent(in_particleType, false);
+        m_collisionConnections.clear();
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+    CS::ParticleEffectComponentSPtr ParticleEffectComponentFactory::CreateOnCollisionParticleEffectComponent(const ParticleType in_particleType, CS::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& in_collisionEvent)
+    {
+        CS::ParticleEffectComponentSPtr particleEffectComponent = CreateParticleEffectComponent(in_particleType, false);
 
-		//The m_collisionConnections vector keeps the event connection in scope. In order to avoid having two copies of a shared pointer
-		//and having the program hang on exit, the event connection is pushed directly onto the m_collisionConnections vector.
-		m_collisionConnections.push_back
-		(
-			in_collisionEvent.OpenConnection([=](const CS::Vector2& in_collisionDirection, CS::Entity* in_collidedEntity)
-			{
-				if (particleEffectComponent != nullptr && !particleEffectComponent->IsPlaying())
-				{
-					particleEffectComponent->Play();
-				}
-			})
-		);
+        //The m_collisionConnections vector keeps the event connection in scope. In order to avoid having two copies of a shared pointer
+        //and having the program hang on exit, the event connection is pushed directly onto the m_collisionConnections vector.
+        m_collisionConnections.push_back
+        (
+            in_collisionEvent.OpenConnection([=](const CS::Vector2& in_collisionDirection, CS::Entity* in_collidedEntity)
+            {
+                if (particleEffectComponent != nullptr && !particleEffectComponent->IsPlaying())
+                {
+                    particleEffectComponent->Play();
+                }
+            })
+        );
 
-		return particleEffectComponent;
-	}
-	//----------------------------------------------------------
-	//----------------------------------------------------------
-	CS::ParticleEffectComponentUPtr ParticleEffectComponentFactory::CreateParticleEffectComponent(const ParticleType in_particleType, const bool in_looping) const
-	{
-		auto resourcePool = CS::Application::Get()->GetResourcePool();
-		auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
+        return particleEffectComponent;
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+    CS::ParticleEffectComponentUPtr ParticleEffectComponentFactory::CreateParticleEffectComponent(const ParticleType in_particleType, const bool in_looping) const
+    {
+        auto resourcePool = CS::Application::Get()->GetResourcePool();
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
 
-		CS::ParticleEffectCSPtr particleEffect = nullptr;
-		switch (in_particleType)
-		{
-		case ParticleType::k_blueIceCreamBurst:
-			particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/BlueIceCreamBurst/Base.csparticle");
-			break;
-		case ParticleType::k_smokeStreamBase:
-			particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Base_Transparent_NoCulling.csparticle");
-			break;
+        CS::ParticleEffectCSPtr particleEffect = nullptr;
+        switch (in_particleType)
+        {
+        case ParticleType::k_blueIceCreamBurst:
+            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/BlueIceCreamBurst/Base.csparticle");
+            break;
+        case ParticleType::k_smokeStreamBase:
+            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Base_Transparent_NoCulling.csparticle");
+            break;
         case ParticleType::k_smokeStreamTimes10:
             particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times10_Transparent_NoCulling.csparticle");
             break;
@@ -124,27 +124,27 @@ namespace CSPong
         case ParticleType::k_smokeStreamTimes500:
             particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times500_Transparent_NoCulling.csparticle");
             break;
-		case ParticleType::k_smokeStreamTimes1000:
-			particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times1000_Transparent_NoCulling.csparticle");
-			break;
-		default:
-			particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Base.csparticle");
-			break;
-		}
+        case ParticleType::k_smokeStreamTimes1000:
+            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times1000_Transparent_NoCulling.csparticle");
+            break;
+        default:
+            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Base.csparticle");
+            break;
+        }
 
-		CS::ParticleEffectComponentUPtr particleComponent = renderFactory->CreateParticleEffectComponent(particleEffect);
+        CS::ParticleEffectComponentUPtr particleComponent = renderFactory->CreateParticleEffectComponent(particleEffect);
 
-		if (in_looping)
-		{
-			particleComponent->SetPlaybackType(CS::ParticleEffectComponent::PlaybackType::k_looping);
-		}
-		else
-		{
-			particleComponent->SetPlaybackType(CS::ParticleEffectComponent::PlaybackType::k_once);
-		}
+        if (in_looping)
+        {
+            particleComponent->SetPlaybackType(CS::ParticleEffectComponent::PlaybackType::k_looping);
+        }
+        else
+        {
+            particleComponent->SetPlaybackType(CS::ParticleEffectComponent::PlaybackType::k_once);
+        }
 
-		return particleComponent;
-	}
+        return particleComponent;
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
     CS::ParticleEffectComponentUPtr ParticleEffectComponentFactory::CreateParticleEffectComponent(const std::string in_particleFileName, const bool in_looping) const
@@ -166,10 +166,10 @@ namespace CSPong
         
         return particleComponent;
     }
-	//------------------------------------------------------------
-	//------------------------------------------------------------
-	void ParticleEffectComponentFactory::AddBallParticles(CS::EntitySPtr in_ballEntity)
-	{
+    //------------------------------------------------------------
+    //------------------------------------------------------------
+    void ParticleEffectComponentFactory::AddBallParticles(CS::EntitySPtr in_ballEntity)
+    {
         if(m_ballParticleTypes.size() > 0)
         {
             for (std::vector<ParticleType>::size_type i = 0; i != m_ballParticleTypes.size(); i++)
@@ -184,18 +184,18 @@ namespace CSPong
                 in_ballEntity->AddComponent( CreateParticleEffectComponent(m_ballParticleFileNames[i], true) );
             }
         }
-	}
-	//------------------------------------------------------------
-	//------------------------------------------------------------
-	void ParticleEffectComponentFactory::AssignBallParticleTypes(std::initializer_list<ParticleType> in_particleTypes)
-	{
-		m_ballParticleTypes = in_particleTypes;
-	}
+    }
+    //------------------------------------------------------------
+    //------------------------------------------------------------
+    void ParticleEffectComponentFactory::AssignBallParticleTypes(std::initializer_list<ParticleType> in_particleTypes)
+    {
+        m_ballParticleTypes = in_particleTypes;
+    }
     //------------------------------------------------------------
     //------------------------------------------------------------
     void ParticleEffectComponentFactory::AssignBallParticleFileNames(std::initializer_list<std::string> in_particleFileNames)
     {
         m_ballParticleFileNames = in_particleFileNames;
     }
-	
+    
 }

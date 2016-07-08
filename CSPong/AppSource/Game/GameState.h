@@ -66,12 +66,6 @@ namespace CSPong
         //------------------------------------------------------------
         void OnInit() override;
         //------------------------------------------------------------
-        /// Called when a goal is scored and plays the ceremony
-        ///
-        /// @author S Downie
-        //------------------------------------------------------------
-        void OnGoalScored(const ScoringSystem::Scores& in_scores);
-        //------------------------------------------------------------
         /// Called when the state is removed from the state manager
         /// stack.
         ///
@@ -81,7 +75,6 @@ namespace CSPong
         
     private:
         
-        CS::EventConnectionUPtr m_scoreChangedConnection;
         CS::EventConnectionUPtr m_transitionInConnection;
         
         CS::EntitySPtr m_ball;
@@ -91,7 +84,7 @@ namespace CSPong
         PhysicsSystem* m_physicsSystem;
         ScoringSystem* m_scoringSystem;
         GameEntityFactory* m_gameEntityFactory;
-		CSProfiling::MetricsSystem* m_metricsSystem;
+        CSProfiling::MetricsSystem* m_metricsSystem;
     };
 }
 

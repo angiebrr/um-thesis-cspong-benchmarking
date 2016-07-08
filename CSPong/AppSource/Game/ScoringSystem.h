@@ -107,17 +107,17 @@ namespace CSPong
         /// @param Player index that will benfit if goal hit
         //------------------------------------------------
         void AddGoalTrigger(const CS::EntitySPtr& in_trigger, u32 in_playerIndex);
-		//------------------------------------------------
-		/// Get the score of the player at the given 
-		/// index.
-		///
-		/// @author Angela Gross
-		///
-		/// @param Player Index
-		///
-		/// @return The score of the given player
-		//------------------------------------------------
-		u32 GetScore(u32 in_playerIndex);
+        //------------------------------------------------
+        /// Get the score of the player at the given 
+        /// index.
+        ///
+        /// @author Angela Gross
+        ///
+        /// @param Player Index
+        ///
+        /// @return The score of the given player
+        //------------------------------------------------
+        u32 GetScore(u32 in_playerIndex);
 
     private:
         //----------------------------------------------------------
