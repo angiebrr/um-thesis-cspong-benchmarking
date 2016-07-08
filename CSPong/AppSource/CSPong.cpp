@@ -65,8 +65,7 @@ namespace CSPong
     namespace
     {
         const std::string k_numParticlesVarName = "numParticles";
-        const std::string k_generatedPPEFileName = "Particles/SmokeStream/Generated/[var=numParticles]_particles_emitted.csparticle";
-        const std::string k_generatedTMPFileName = "Particles/SmokeStream/Generated/[var=numParticles]_total_max.csparticle";
+        const std::string k_generatedFileName = "Particles/SmokeStream/Generated/[var=numParticles]_particles.csparticle";
     }
     
     //---------------------------------------------------------
@@ -74,12 +73,14 @@ namespace CSPong
     void App::CreateSystems()
     {
         CSProfiling::MetricsSystem::ArgData metricsArgData;
+        // the "constant" particles is going to be affected by the step after each run as well
+        metricsArgData.m_isTMPChanging = true;
         metricsArgData.m_isPPEChanging = true; 
-        // if PPE is changing, constant particles are TMP, and if PPE is constant, then constant particles are PPE.
-        metricsArgData.m_constantParticles = 10000; 
+        metricsArgData.m_tmpParticles = 0;
+        metricsArgData.m_ppeParticles = 0;
         metricsArgData.m_minParticles = 0;
-        metricsArgData.m_maxParticles = 500;
-        metricsArgData.m_particlesStep = 500;
+        metricsArgData.m_maxParticles = 1000000;
+        metricsArgData.m_particlesStep = 50000;
         metricsArgData.m_maxRunNum = 5;
         metricsArgData.m_runTime = 5; //seconds
 
@@ -89,11 +90,10 @@ namespace CSPong
         CreateSystem<ParticleEffectComponentFactory>();
         CSProfiling::MetricsSystem* metricsSystem = CreateSystem<CSProfiling::MetricsSystem>(metricsArgData);
 
-        // build path based on the first number of particles emitted (i.e. min) and whether or not the TMP or PPE is changing
-        std::string filePath = metricsArgData.m_isPPEChanging ? k_generatedPPEFileName : k_generatedTMPFileName;
+        // build path based on the first number of particles emitted (i.e. min)
         std::string particlePath = CS::StringUtils::InsertVariables
         (
-             filePath,
+             k_generatedFileName,
              {
                  std::make_pair(k_numParticlesVarName, TO_STRING(metricsArgData.m_minParticles))
              }
@@ -126,7 +126,7 @@ namespace CSPong
                     // build path based on current particles emitted
                     std::string particlePath = CS::StringUtils::InsertVariables
                     (
-                        filePath,
+                        k_generatedFileName,
                         {
                             std::make_pair(k_numParticlesVarName, TO_STRING(currentParticles))
                         }

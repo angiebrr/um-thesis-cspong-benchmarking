@@ -19,14 +19,14 @@ import argparse
 # ---------------------------------------------------------------------------------------------
 
 # Default particle names and base particle data holder
-k_PPEFileName = "%d_particles_emitted.csparticle"
-k_TMPFileName = "%d_total_max_particles.csparticle"
+k_fileName = "%d_particles.csparticle"
 k_mainParticleFileName = "Base.csparticle"
 k_mainParticleData = ""
 
 # Read with arguments- these are filler values
 k_generatedParticlesDirectory = "Generated"
 k_isPPEChanging = True
+k_isTMPChanging = False
 k_minParticles = 0
 k_maxParticles = 1000
 k_particlesStep = 100
@@ -64,12 +64,15 @@ def createParticleFile(in_changingParticles):
 	newParticleData = k_mainParticleData;
 	
 	# format the file name and change the changing particle attribute
+	newParticleFileName = k_generatedParticlesDirectory + "/" + ( k_fileName % (in_changingParticles) )
 	if k_isPPEChanging:
-		newParticleFileName = k_generatedParticlesDirectory + "/" + ( k_PPEFileName % (in_changingParticles) )
 		newParticleData["Emitter"]["ParticlesPerEmissionProperty"] = "%s" % (in_changingParticles)
-	else:
-		newParticleFileName = k_generatedParticlesDirectory + "/" + ( k_TMPFileName % (in_changingParticles) )
-		newParticleData["MaxParticles"] = "%s" % (in_changingParticles)
+	if k_isTMPChanging:
+		if in_changingParticles == 0:
+			# this value is used to allocate an array, so it needs to be at least 1
+			newParticleData["MaxParticles"] = "1"
+		else:
+			newParticleData["MaxParticles"] = "%s" % (in_changingParticles)
 
 	# write file
 	with open(newParticleFileName, 'w') as file:
@@ -85,11 +88,11 @@ if __name__ == "__main__":
 
 	# Setup argument parsing
 	argParser = argparse.ArgumentParser(description='Generate Particle JSON Files')
-	argParser.add_argument('-changing', required=True, choices=['PPE', 'TMP'], help='Either the particles per emission (PPE) or total max particles (TMP) will be changing from min to max.')
+	argParser.add_argument('-changing', required=True, choices=['PPE', 'TMP', 'Both'], help='Either the particles per emission (PPE) or total max particles (TMP) will be changing from min to max.')
 	argParser.add_argument('-min', default=0, type=int, help='The minimum particles- either PPE or TMP. (non-negative number, default: %(default)s)')
 	argParser.add_argument('-max', default=1000, type=int, help='The maximum particles- either PPE or TMP. (non-negative number, default: %(default)s)')
 	argParser.add_argument('-step', default=100, type=int, help='The step between min and max particles- either PPE or TMP. (default: %(default)s)')
-	argParser.add_argument('-constant', default=10000, type=int, help='The constant number of particles, either PPE or TMP but it will be opposite of arg "changing". (default: %(default)s)')
+	argParser.add_argument('-constant', default=10000, type=int, help='The constant number of particles, either PPE or TMP but it will be opposite of arg "changing". If both are changing, then this has no effect. (default: %(default)s)')
 	argParser.add_argument('-dir', default='Generated', help='The output directory name (default is "%(default)s" and it will create it for you)')
 	args = vars(argParser.parse_args())
 
@@ -99,16 +102,17 @@ if __name__ == "__main__":
 	k_particlesStep = args['step']
 	k_constantParticles = args['constant']
 	k_generatedParticlesDirectory = args['dir']
-	k_isPPEChanging = args['changing'] == 'PPE'
+	k_isTMPChanging = args['changing'] == 'TMP' or args['changing'] == 'Both'
+	k_isPPEChanging = args['changing'] == 'PPE' or args['changing'] == 'Both'
 
 	# Get copy of base particle file
 	with open(k_mainParticleFileName, 'r') as file:
 		k_mainParticleData = json.load(file)
 	
 	# Update constant particles attribute
-	if k_isPPEChanging:
+	if not k_isTMPChanging:
 		k_mainParticleData["MaxParticles"] = "%s" % k_constantParticles
-	else:
+	elif not k_isPPEChanging:
 		k_mainParticleData["Emitter"]["ParticlesPerEmissionProperty"] = "%s" % k_constantParticles
 	
 	# Write the base file
