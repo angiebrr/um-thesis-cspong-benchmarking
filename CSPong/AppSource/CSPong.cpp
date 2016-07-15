@@ -73,14 +73,18 @@ namespace CSPong
     void App::CreateSystems()
     {
         CSProfiling::MetricsSystem::ArgData metricsArgData;
-        // the "constant" particles is going to be affected by the step after each run as well
+        // changing and constant values
         metricsArgData.m_isTMPChanging = true;
-        metricsArgData.m_isPPEChanging = true; 
-        metricsArgData.m_tmpParticles = 0;
-        metricsArgData.m_ppeParticles = 0;
-        metricsArgData.m_minParticles = 0;
-        metricsArgData.m_maxParticles = 1000000;
-        metricsArgData.m_particlesStep = 50000;
+        metricsArgData.m_isPPEChanging = false;
+        metricsArgData.m_tmpParticles = 0; // this will only be used if m_isTMPChanging == false
+        metricsArgData.m_ppeParticles = 0; // this will only be used if m_isPPEChanging == false
+        // only changing variables will use min, max, and step
+        metricsArgData.m_minParticles = 0; 
+        metricsArgData.m_maxParticles = 100000;
+        metricsArgData.m_particlesStep = 5000;
+        metricsArgData.m_ppeStep = 0.0f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
+        metricsArgData.m_tmpStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isTMPChanging == true
+        // number of runs per step and how long each run is
         metricsArgData.m_maxRunNum = 5;
         metricsArgData.m_runTime = 5; //seconds
 

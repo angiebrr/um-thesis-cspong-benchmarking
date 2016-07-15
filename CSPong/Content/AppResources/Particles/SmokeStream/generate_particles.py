@@ -30,6 +30,8 @@ k_isTMPChanging = False
 k_minParticles = 0
 k_maxParticles = 1000
 k_particlesStep = 100
+k_ppeStep = 1.0
+k_tmpStep = 1.0
 k_constantParticles = 10000
 
 # //////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,17 +68,29 @@ def createParticleFile(in_changingParticles):
 	# format the file name and change the changing particle attribute
 	newParticleFileName = k_generatedParticlesDirectory + "/" + ( k_fileName % (in_changingParticles) )
 	if k_isPPEChanging:
-		newParticleData["Emitter"]["ParticlesPerEmissionProperty"] = "%s" % (in_changingParticles)
+		newParticleData["Emitter"]["ParticlesPerEmissionProperty"] = "%s" % (in_changingParticles * k_ppeStep)
 	if k_isTMPChanging:
 		if in_changingParticles == 0:
 			# this value is used to allocate an array, so it needs to be at least 1
 			newParticleData["MaxParticles"] = "1"
 		else:
-			newParticleData["MaxParticles"] = "%s" % (in_changingParticles)
+			newParticleData["MaxParticles"] = "%s" % (in_changingParticles * k_tmpStep)
 
 	# write file
 	with open(newParticleFileName, 'w') as file:
 		json.dump(newParticleData, file, indent=4, sort_keys=True)
+
+# //////////////////////////////////////////////////////////////////////////////////////////////
+
+# ---------------------------------------------------------------------------------------------
+# ARGUMENT PARSER HELPERS
+# ---------------------------------------------------------------------------------------------
+
+def restricted_float(x):
+    x = float(x)
+    if x < 0.0 or x > 1.0:
+        raise argparse.ArgumentTypeError("%r not in range [0.0, 1.0]"%(x,))
+    return x
 
 # //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,6 +107,8 @@ if __name__ == "__main__":
 	argParser.add_argument('-max', default=1000, type=int, help='The maximum particles- either PPE or TMP. (non-negative number, default: %(default)s)')
 	argParser.add_argument('-step', default=100, type=int, help='The step between min and max particles- either PPE or TMP. (default: %(default)s)')
 	argParser.add_argument('-constant', default=10000, type=int, help='The constant number of particles, either PPE or TMP but it will be opposite of arg "changing". If both are changing, then this has no effect. (default: %(default)s)')
+	argParser.add_argument('-tmpStep', default=1.0, type=restricted_float, help='The percent that TMP will step by if it is changing. (default: %(default)s)')
+	argParser.add_argument('-ppeStep', default=1.0, type=restricted_float, help='The percent that PPE will step by if it is changing. (default: %(default)s)')
 	argParser.add_argument('-dir', default='Generated', help='The output directory name (default is "%(default)s" and it will create it for you)')
 	args = vars(argParser.parse_args())
 
@@ -104,6 +120,8 @@ if __name__ == "__main__":
 	k_generatedParticlesDirectory = args['dir']
 	k_isTMPChanging = args['changing'] == 'TMP' or args['changing'] == 'Both'
 	k_isPPEChanging = args['changing'] == 'PPE' or args['changing'] == 'Both'
+	k_tmpStep = args['tmpStep']
+	k_ppeStep = args['ppeStep']
 
 	# Get copy of base particle file
 	with open(k_mainParticleFileName, 'r') as file:
