@@ -149,9 +149,10 @@ namespace CSPong
         ///
         /// @author Angela Gross
         ///
-        /// @param The entity that represents the ball
+        /// @param in_ballEntity The entity that represents the ball
+        /// @param in_looping Whether or not to loop the particle effects
         //------------------------------------------------------------
-        void AddBallParticles(CS::EntitySPtr in_ballEntity);
+        void AddBallParticles(CS::EntitySPtr in_ballEntity, const bool in_looping);
         //------------------------------------------------------------
         /// Sets the ball particles
         ///

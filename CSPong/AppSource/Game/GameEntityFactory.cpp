@@ -158,7 +158,8 @@ namespace CSPong
         m_scoringSystem->AddBallBody(dynamicBody);
 
         auto particleECFSystem = CS::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
-        particleECFSystem->AddBallParticles(ball);
+        bool loopParticles = false;
+        particleECFSystem->AddBallParticles(ball, loopParticles);
         
         return ball;
     }

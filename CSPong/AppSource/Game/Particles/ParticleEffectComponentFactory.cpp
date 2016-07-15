@@ -168,20 +168,20 @@ namespace CSPong
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void ParticleEffectComponentFactory::AddBallParticles(CS::EntitySPtr in_ballEntity)
+    void ParticleEffectComponentFactory::AddBallParticles(CS::EntitySPtr in_ballEntity, const bool in_looping)
     {
         if(m_ballParticleTypes.size() > 0)
         {
             for (std::vector<ParticleType>::size_type i = 0; i != m_ballParticleTypes.size(); i++)
             {
-                in_ballEntity->AddComponent( CreateParticleEffectComponent(m_ballParticleTypes[i], true) );
+                in_ballEntity->AddComponent( CreateParticleEffectComponent(m_ballParticleTypes[i], in_looping) );
             }
         }
         else if(m_ballParticleFileNames.size() > 0)
         {
             for(std::vector<std::string>::size_type i = 0; i != m_ballParticleFileNames.size(); i++)
             {
-                in_ballEntity->AddComponent( CreateParticleEffectComponent(m_ballParticleFileNames[i], true) );
+                in_ballEntity->AddComponent( CreateParticleEffectComponent(m_ballParticleFileNames[i], in_looping) );
             }
         }
     }
