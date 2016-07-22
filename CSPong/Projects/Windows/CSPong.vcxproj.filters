@@ -1,3 +1,102 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\AppSource\CSPong.cpp" />
+    <ClCompile Include="..\..\AppSource\Common\TransitionSystem.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Ball\BallControllerComponent.cpp">
+      <Filter>Game\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Ball\BallStaticMeshComponent.cpp">
+      <Filter>Game\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Camera\CameraTiltComponent.cpp">
+      <Filter>Game\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Particles\ParticleEffectComponentFactory.cpp">
+      <Filter>Game\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Physics\DynamicBodyComponent.cpp">
+      <Filter>Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Physics\PhysicsSystem.cpp">
+      <Filter>Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Physics\StaticBodyComponent.cpp">
+      <Filter>Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Physics\TriggerComponent.cpp">
+      <Filter>Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\GameEntityFactory.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\GameState.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\ScoringSystem.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\AppSource\CSPong.h" />
+    <ClInclude Include="..\..\AppSource\ForwardDeclarations.h" />
+    <ClInclude Include="..\..\AppSource\Common\TransitionSystem.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Ball\BallControllerComponent.h">
+      <Filter>Game\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Ball\BallStaticMeshComponent.h">
+      <Filter>Game\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Camera\CameraTiltComponent.h">
+      <Filter>Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Particles\ParticleEffectComponentFactory.h">
+      <Filter>Game\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Physics\DynamicBodyComponent.h">
+      <Filter>Game\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Physics\PhysicsSystem.h">
+      <Filter>Game\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Physics\StaticBodyComponent.h">
+      <Filter>Game\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Physics\TriggerComponent.h">
+      <Filter>Game\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\GameEntityFactory.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\GameState.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\ScoringSystem.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{77388298-a503-4b05-bbda-4a5084c46694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{4f07dce2-e8fb-4692-95aa-ed5b2fcba03a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Ball">
+      <UniqueIdentifier>{dee8e85b-02ea-483b-b5ac-3422106579b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Camera">
+      <UniqueIdentifier>{d898e7d7-b0e1-4c5f-8e0c-923ea7f7bfe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Particles">
+      <UniqueIdentifier>{bb6abfab-b85f-4785-940d-b290530d3f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Physics">
+      <UniqueIdentifier>{fe88d7d8-9d35-4047-9a96-dd6043bea7bf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
 </Project>

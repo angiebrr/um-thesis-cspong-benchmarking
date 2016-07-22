@@ -36,6 +36,7 @@
 #include <Game/Physics/StaticBodyComponent.h>
 #include <Game/Physics/TriggerComponent.h>
 #include <Game/Particles/ParticleEffectComponentFactory.h>
+#include <CSPong.h>
 
 #include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/Entity.h>
@@ -157,10 +158,17 @@ namespace CSPong
         
         m_scoringSystem->AddBallBody(dynamicBody);
 
-        auto particleECFSystem = CS::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
-        bool loopParticles = false;
-        particleECFSystem->AddBallParticles(ball, loopParticles);
-        
+        // Add particles to the ball by getting the particle information from the CSPong::App.
+        if (CSPong::App* app = dynamic_cast<CSPong::App*>(CS::Application::Get()))
+        {
+            std::string currentParticleFileName = app->GetCurrentParticleFileName();
+            bool loopParticles = app->AreParticlesLooping();
+            u32 numParticleEffects = app->GetNumParticleEffects();
+
+            auto particleECFSystem = CS::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+            particleECFSystem->AddBallParticles(ball, currentParticleFileName, numParticleEffects, loopParticles);
+        }
+
         return ball;
     }
     //------------------------------------------------------------

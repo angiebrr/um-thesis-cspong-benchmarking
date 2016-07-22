@@ -72,16 +72,23 @@ namespace CSPong
     //---------------------------------------------------------
     void App::CreateSystems()
     {
+        // member variables that need to accessible by the GameEntityFactory
+        m_areParticlesLooping = false;
+        m_numParticleEffects = 10;
+
         CSProfiling::MetricsSystem::ArgData metricsArgData;
+        // misc particle effect information
+        metricsArgData.m_areParticlesLooping = m_areParticlesLooping;
+        metricsArgData.m_numParticleEffects = m_numParticleEffects;
         // changing and constant values
         metricsArgData.m_isTMPChanging = true;
-        metricsArgData.m_isPPEChanging = false;
+        metricsArgData.m_isPPEChanging = true;
         metricsArgData.m_tmpParticles = 0; // this will only be used if m_isTMPChanging == false
         metricsArgData.m_ppeParticles = 0; // this will only be used if m_isPPEChanging == false
         // only changing variables will use min, max, and step
         metricsArgData.m_minParticles = 0; 
-        metricsArgData.m_maxParticles = 100000;
-        metricsArgData.m_particlesStep = 5000;
+        metricsArgData.m_maxParticles = 10000;
+        metricsArgData.m_particlesStep = 500;
         metricsArgData.m_ppeStep = 0.0f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
         metricsArgData.m_tmpStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isTMPChanging == true
         // number of runs per step and how long each run is
@@ -104,7 +111,7 @@ namespace CSPong
         );
         
         // start off with the first particle type
-        GetSystem<ParticleEffectComponentFactory>()->AssignBallParticleFileNames({particlePath});
+        m_currentParticleFileName = particlePath;
 
         // reset the game state and re-run the test
         m_metricsTimerStoppedConnection = metricsSystem->GetTimerStoppedEvent().OpenConnection([=]()
@@ -136,7 +143,7 @@ namespace CSPong
                         }
                     );
                     
-                    CS::Application::Get()->GetSystem<ParticleEffectComponentFactory>()->AssignBallParticleFileNames({particlePath});
+                    m_currentParticleFileName = particlePath;
                     GetStateManager()->Change(CS::StateSPtr(new GameState()));
                 }
             }
@@ -159,6 +166,24 @@ namespace CSPong
     void App::OnDestroy()
     {
         m_metricsTimerStoppedConnection->Close();
+    }
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+    u32 App::GetNumParticleEffects() const
+    {
+        return m_numParticleEffects;
+    }
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+    bool App::AreParticlesLooping() const
+    {
+        return m_areParticlesLooping;
+    }
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+    std::string App::GetCurrentParticleFileName() const
+    {
+        return m_currentParticleFileName;
     }
 }
 

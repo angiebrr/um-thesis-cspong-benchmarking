@@ -109,24 +109,6 @@ namespace CSPong
         case ParticleType::k_blueIceCreamBurst:
             particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/BlueIceCreamBurst/Base.csparticle");
             break;
-        case ParticleType::k_smokeStreamBase:
-            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Base_Transparent_NoCulling.csparticle");
-            break;
-        case ParticleType::k_smokeStreamTimes10:
-            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times10_Transparent_NoCulling.csparticle");
-            break;
-        case ParticleType::k_smokeStreamTimes50:
-            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times50_Transparent_NoCulling.csparticle");
-            break;
-        case ParticleType::k_smokeStreamTimes100:
-            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times100_Transparent_NoCulling.csparticle");
-            break;
-        case ParticleType::k_smokeStreamTimes500:
-            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times500_Transparent_NoCulling.csparticle");
-            break;
-        case ParticleType::k_smokeStreamTimes1000:
-            particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Times1000_Transparent_NoCulling.csparticle");
-            break;
         default:
             particleEffect = resourcePool->LoadResource<CS::ParticleEffect>(CS::StorageLocation::k_package, "Particles/SmokeStream/Base.csparticle");
             break;
@@ -168,34 +150,21 @@ namespace CSPong
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void ParticleEffectComponentFactory::AddBallParticles(CS::EntitySPtr in_ballEntity, const bool in_looping)
+    void ParticleEffectComponentFactory::AddBallParticles(CS::EntitySPtr in_ballEntity, const ParticleType in_particleType, u32 in_numParticleEffects, const bool in_looping)
     {
-        if(m_ballParticleTypes.size() > 0)
+        for (u32 i = 0; i < in_numParticleEffects; i++)
         {
-            for (std::vector<ParticleType>::size_type i = 0; i != m_ballParticleTypes.size(); i++)
-            {
-                in_ballEntity->AddComponent( CreateParticleEffectComponent(m_ballParticleTypes[i], in_looping) );
-            }
-        }
-        else if(m_ballParticleFileNames.size() > 0)
-        {
-            for(std::vector<std::string>::size_type i = 0; i != m_ballParticleFileNames.size(); i++)
-            {
-                in_ballEntity->AddComponent( CreateParticleEffectComponent(m_ballParticleFileNames[i], in_looping) );
-            }
+            in_ballEntity->AddComponent( CreateParticleEffectComponent(in_particleType, in_looping) );
         }
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void ParticleEffectComponentFactory::AssignBallParticleTypes(std::initializer_list<ParticleType> in_particleTypes)
+    void ParticleEffectComponentFactory::AddBallParticles(CS::EntitySPtr in_ballEntity, const std::string in_particleFileName, u32 in_numParticleEffects, const bool in_looping)
     {
-        m_ballParticleTypes = in_particleTypes;
-    }
-    //------------------------------------------------------------
-    //------------------------------------------------------------
-    void ParticleEffectComponentFactory::AssignBallParticleFileNames(std::initializer_list<std::string> in_particleFileNames)
-    {
-        m_ballParticleFileNames = in_particleFileNames;
+        for (u32 i = 0; i < in_numParticleEffects; i++)
+        {
+            in_ballEntity->AddComponent( CreateParticleEffectComponent(in_particleFileName, in_looping) );
+        }
     }
     
 }

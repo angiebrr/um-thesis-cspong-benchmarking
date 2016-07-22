@@ -69,9 +69,33 @@ namespace CSPong
         /// @author S Downie
         //---------------------------------------------------------
         void OnDestroy() override;
+        //---------------------------------------------------------
+        /// Returns the number of particle effects that will be 
+        /// attached to the ball.
+        ///
+        /// @author Angela Gross
+        //---------------------------------------------------------
+        u32 GetNumParticleEffects() const;
+        //---------------------------------------------------------
+        /// Returns whether or not the attached particle effects
+        /// will be looping.
+        ///
+        /// @author Angela Gross
+        //---------------------------------------------------------
+        bool AreParticlesLooping() const;
+        //---------------------------------------------------------
+        /// Returns the current particle file name
+        ///
+        /// @author Angela Gross
+        //---------------------------------------------------------
+        std::string GetCurrentParticleFileName() const;
 
 	private:
 		CS::EventConnectionUPtr m_metricsTimerStoppedConnection;
+
+        u32 m_numParticleEffects;
+        bool m_areParticlesLooping;
+        std::string m_currentParticleFileName;
     };
 }
 

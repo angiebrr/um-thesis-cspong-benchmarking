@@ -46,13 +46,7 @@ namespace CSPong
     enum class ParticleType
     {
         k_blueIceCreamBurst,
-        k_smokeStream,
-        k_smokeStreamBase,
-        k_smokeStreamTimes10,
-        k_smokeStreamTimes50,
-        k_smokeStreamTimes100,
-        k_smokeStreamTimes500,
-        k_smokeStreamTimes1000,
+        k_smokeStream
     };
 
     //------------------------------------------------------------
@@ -144,31 +138,31 @@ namespace CSPong
         CS::ParticleEffectComponentSPtr CreateOnCollisionParticleEffectComponent(const ParticleType in_particleType, CS::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& in_collisionEvent);
         //------------------------------------------------------------
         /// Creates and adds particle components to the ball entity
-        /// according to what particle types are in 
-        /// m_ballParticleTypes.
+        /// according to the given particle file name and number of
+        /// particles.
         ///
         /// @author Angela Gross
         ///
         /// @param in_ballEntity The entity that represents the ball
+        /// @param in_particleFileName The name of the csparticle file
+        /// @param in_numParticleEffects The number of particle effects to attach to the ball
         /// @param in_looping Whether or not to loop the particle effects
         //------------------------------------------------------------
-        void AddBallParticles(CS::EntitySPtr in_ballEntity, const bool in_looping);
+        void AddBallParticles(CS::EntitySPtr in_ballEntity, const std::string in_particleFileName, u32 in_numParticleEffects, const bool in_looping);
         //------------------------------------------------------------
-        /// Sets the ball particles
+        /// Creates and adds particle components to the ball entity
+        /// according to the given particle type and number of 
+        /// particles.
         ///
         /// @author Angela Gross
         ///
-        /// @param in_particleTypes
+        /// @param in_ballEntity The entity that represents the ball
+        /// @param in_particleType The enumerated type of particle to attach
+        /// @param in_numParticleEffects The number of particle effects to attach to the ball
+        /// @param in_looping Whether or not to loop the particle effects
         //------------------------------------------------------------
-        void AssignBallParticleTypes(std::initializer_list<ParticleType> in_particleTypes);
-        //------------------------------------------------------------
-        /// Sets the ball particles
-        ///
-        /// @author Angela Gross
-        ///
-        /// @param in_particleFileName
-        //------------------------------------------------------------
-        void AssignBallParticleFileNames(std::initializer_list<std::string> in_particleFileNames);
+        void AddBallParticles(CS::EntitySPtr in_ballEntity, const ParticleType in_particleType, u32 in_numParticleEffects, const bool in_looping);
+
 
     private:
         //----------------------------------------------------------
@@ -178,8 +172,6 @@ namespace CSPong
         //----------------------------------------------------------
         ParticleEffectComponentFactory();
 
-        std::vector<std::string> m_ballParticleFileNames;
-        std::vector<ParticleType> m_ballParticleTypes;
         std::vector<CS::EventConnectionSPtr> m_collisionConnections;
     };
 }
