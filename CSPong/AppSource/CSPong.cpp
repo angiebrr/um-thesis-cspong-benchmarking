@@ -74,7 +74,7 @@ namespace CSPong
     {
         // member variables that need to accessible by the GameEntityFactory
         m_areParticlesLooping = false;
-        m_numParticleEffects = 10;
+        m_numParticleEffects = 1;
 
         CSProfiling::MetricsSystem::ArgData metricsArgData;
         // misc particle effect information
@@ -86,10 +86,10 @@ namespace CSPong
         metricsArgData.m_tmpParticles = 0; // this will only be used if m_isTMPChanging == false
         metricsArgData.m_ppeParticles = 0; // this will only be used if m_isPPEChanging == false
         // only changing variables will use min, max, and step
-        metricsArgData.m_minParticles = 0; 
-        metricsArgData.m_maxParticles = 10000;
-        metricsArgData.m_particlesStep = 500;
-        metricsArgData.m_ppeStep = 0.0f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
+        metricsArgData.m_minParticles = 50000; 
+        metricsArgData.m_maxParticles = 70000;
+        metricsArgData.m_particlesStep = 2000;
+        metricsArgData.m_ppeStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
         metricsArgData.m_tmpStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isTMPChanging == true
         // number of runs per step and how long each run is
         metricsArgData.m_maxRunNum = 5;
