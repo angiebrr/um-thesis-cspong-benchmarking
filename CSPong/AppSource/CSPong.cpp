@@ -72,46 +72,18 @@ namespace CSPong
     //---------------------------------------------------------
     void App::CreateSystems()
     {
-        // member variables that need to accessible by the GameEntityFactory
-        m_areParticlesLooping = false;
-        m_numParticleEffects = 1;
-
-        CSProfiling::MetricsSystem::ArgData metricsArgData;
-        // misc particle effect information
-        metricsArgData.m_areParticlesLooping = m_areParticlesLooping;
-        metricsArgData.m_numParticleEffects = m_numParticleEffects;
-        // changing and constant values
-        metricsArgData.m_isTMPChanging = true;
-        metricsArgData.m_isPPEChanging = true;
-        metricsArgData.m_tmpParticles = 0; // this will only be used if m_isTMPChanging == false
-        metricsArgData.m_ppeParticles = 0; // this will only be used if m_isPPEChanging == false
-        // only changing variables will use min, max, and step
-        metricsArgData.m_minParticles = 50000; 
-        metricsArgData.m_maxParticles = 70000;
-        metricsArgData.m_particlesStep = 2000;
-        metricsArgData.m_ppeStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
-        metricsArgData.m_tmpStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isTMPChanging == true
-        // number of runs per step and how long each run is
-        metricsArgData.m_maxRunNum = 5;
-        metricsArgData.m_runTime = 5; //seconds
-
         CreateSystem<CS::CSModelProvider>();
         CreateSystem<CS::CSAnimProvider>();
         CreateSystem<CS::Accelerometer>();
         CreateSystem<ParticleEffectComponentFactory>();
-        CSProfiling::MetricsSystem* metricsSystem = CreateSystem<CSProfiling::MetricsSystem>(metricsArgData);
-
-        // build path based on the first number of particles emitted (i.e. min)
-        std::string particlePath = CS::StringUtils::InsertVariables
-        (
-             k_generatedFileName,
-             {
-                 std::make_pair(k_numParticlesVarName, TO_STRING(metricsArgData.m_minParticles))
-             }
-        );
-        
-        // start off with the first particle type
-        m_currentParticleFileName = particlePath;
+        SetupProfilingSystems();
+    }
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+    void App::SetupProfilingSystems()
+    {
+        CSProfiling::MetricsSystem* metricsSystem = CreateMetricsSystem();
+        CSProfiling::TimingSystem* timingSystem = CreateSystem<CSProfiling::TimingSystem>();
 
         // reset the game state and re-run the test
         m_metricsTimerStoppedConnection = metricsSystem->GetTimerStoppedEvent().OpenConnection([=]()
@@ -123,9 +95,11 @@ namespace CSPong
             }
             else
             {
-                // if we have gone through all runs for all particles, then quit
+                // if we have gone through all runs for all particles, output timing information and then quit
                 if (metricsSystem->AreAllRunsOver())
                 {
+                    timingSystem->OutputTimes();
+
                     CS::Application::Get()->Quit();
                     exit(1);
                 }
@@ -133,22 +107,66 @@ namespace CSPong
                 else
                 {
                     u32 currentParticles = metricsSystem->IncrementParticles();
-                    
+
                     // build path based on current particles emitted
                     std::string particlePath = CS::StringUtils::InsertVariables
-                    (
-                        k_generatedFileName,
-                        {
-                            std::make_pair(k_numParticlesVarName, TO_STRING(currentParticles))
-                        }
+                        (
+                            k_generatedFileName,
+                            {
+                                std::make_pair(k_numParticlesVarName, TO_STRING(currentParticles))
+                            }
                     );
-                    
+
                     m_currentParticleFileName = particlePath;
                     GetStateManager()->Change(CS::StateSPtr(new GameState()));
                 }
             }
         });
     }
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+    CSProfiling::MetricsSystem* App::CreateMetricsSystem()
+    {
+        // member variables that need to accessible by the GameEntityFactory
+        this->m_areParticlesLooping = false;
+        this->m_numParticleEffects = 1;
+
+        CSProfiling::MetricsSystem::ArgData metricsArgData;
+        // misc particle effect information
+        metricsArgData.m_areParticlesLooping = this->m_areParticlesLooping;
+        metricsArgData.m_numParticleEffects = this->m_numParticleEffects;
+        // changing and constant values
+        metricsArgData.m_isTMPChanging = true;
+        metricsArgData.m_isPPEChanging = true;
+        metricsArgData.m_tmpParticles = 0; // this will only be used if m_isTMPChanging == false
+        metricsArgData.m_ppeParticles = 0; // this will only be used if m_isPPEChanging == false
+        // only changing variables will use min, max, and step
+        metricsArgData.m_minParticles = 50000;
+        metricsArgData.m_maxParticles = 50000;
+        metricsArgData.m_particlesStep = 0;
+        metricsArgData.m_ppeStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
+        metricsArgData.m_tmpStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isTMPChanging == true
+        // number of runs per step and how long each run is
+        metricsArgData.m_maxRunNum = 1;
+        metricsArgData.m_runTime = 20; //seconds
+
+        // build path based on the first number of particles emitted (i.e. min)
+        std::string particlePath = CS::StringUtils::InsertVariables
+        (
+            k_generatedFileName,
+            {
+                std::make_pair(k_numParticlesVarName, TO_STRING(metricsArgData.m_minParticles))
+            }
+        );
+
+        // start off with the first particle type
+        m_currentParticleFileName = particlePath;
+
+        return CreateSystem<CSProfiling::MetricsSystem>(metricsArgData);
+    }
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+
     //---------------------------------------------------------
     //---------------------------------------------------------
     void App::OnInit()

@@ -29,6 +29,8 @@
 #ifndef _APPSOURCE_CSPONG_H_
 #define _APPSOURCE_CSPONG_H_
 
+#include <CSProfiling/CSProfiling.h>
+
 #include <ChilliSource/Core/Base.h>
 #include <ForwardDeclarations.h>
 
@@ -49,6 +51,19 @@ namespace CSPong
         /// @author S Downie
         //---------------------------------------------------------
         void CreateSystems() override;
+        //---------------------------------------------------------
+        /// Creates and initializes the Metrics System
+        ///
+        /// @author Angela Gross
+        //---------------------------------------------------------
+        CSProfiling::MetricsSystem* CreateMetricsSystem();
+        //---------------------------------------------------------
+        /// Creates and initiates the metrics and timing profiling 
+        /// systems.
+        ///
+        /// @author Angela Gross
+        //---------------------------------------------------------
+        void SetupProfilingSystems();
         //---------------------------------------------------------
         /// Called after all app system have been created allowing
         /// any system dependent initialisation
@@ -89,6 +104,7 @@ namespace CSPong
         /// @author Angela Gross
         //---------------------------------------------------------
         std::string GetCurrentParticleFileName() const;
+        
 
 	private:
 		CS::EventConnectionUPtr m_metricsTimerStoppedConnection;
