@@ -128,7 +128,7 @@ namespace CSPong
     CSProfiling::MetricsSystem* App::CreateMetricsSystem()
     {
         // member variables that need to accessible by the GameEntityFactory
-        this->m_areParticlesLooping = false;
+        this->m_areParticlesLooping = true;
         this->m_numParticleEffects = 1;
 
         CSProfiling::MetricsSystem::ArgData metricsArgData;
@@ -141,14 +141,14 @@ namespace CSPong
         metricsArgData.m_tmpParticles = 0; // this will only be used if m_isTMPChanging == false
         metricsArgData.m_ppeParticles = 0; // this will only be used if m_isPPEChanging == false
         // only changing variables will use min, max, and step
-        metricsArgData.m_minParticles = 50000;
+        metricsArgData.m_minParticles = 10000;
         metricsArgData.m_maxParticles = 50000;
-        metricsArgData.m_particlesStep = 0;
-        metricsArgData.m_ppeStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
+        metricsArgData.m_particlesStep = 2500;
+        metricsArgData.m_ppeStep = 0.25f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
         metricsArgData.m_tmpStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isTMPChanging == true
         // number of runs per step and how long each run is
         metricsArgData.m_maxRunNum = 1;
-        metricsArgData.m_runTime = 20; //seconds
+        metricsArgData.m_runTime = 5; //seconds
 
         // build path based on the first number of particles emitted (i.e. min)
         std::string particlePath = CS::StringUtils::InsertVariables

@@ -15,9 +15,9 @@
     }, 
     "Drawable": {
         "AtlasPath": "TextureAtlases/Particles/Particles.csatlas", 
-        "ImageIds": "Smoke", 
+        "ImageIds": "Smoke_Small", 
         "MaterialPath": "Materials/Particles/Particles.csmaterial", 
-        "ParticleSize": "5.0 5.0", 
+        "ParticleSize": "1.0 1.0", 
         "SizePolicy": "FitMaintainingAspect", 
         "Type": "StaticBillboard"
     }, 
