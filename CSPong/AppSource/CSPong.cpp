@@ -82,8 +82,11 @@ namespace CSPong
     //---------------------------------------------------------
     void App::SetupProfilingSystems()
     {
-        CSProfiling::MetricsSystem* metricsSystem = CreateMetricsSystem();
-        CSProfiling::TimingSystem* timingSystem = CreateSystem<CSProfiling::TimingSystem>();
+        // Retrieve a directory name that will be shared by both profiling systems
+        std::string profilingDataDir = GetProfilingDataDir();
+
+        CSProfiling::MetricsSystem* metricsSystem = CreateMetricsSystem(profilingDataDir);
+        CSProfiling::TimingSystem* timingSystem = CreateSystem<CSProfiling::TimingSystem>(profilingDataDir);
 
         // reset the game state and re-run the test
         m_metricsTimerStoppedConnection = metricsSystem->GetTimerStoppedEvent().OpenConnection([=]()
@@ -125,13 +128,14 @@ namespace CSPong
     }
     //---------------------------------------------------------
     //---------------------------------------------------------
-    CSProfiling::MetricsSystem* App::CreateMetricsSystem()
+    CSProfiling::MetricsSystem* App::CreateMetricsSystem(std::string in_dataDir)
     {
         // member variables that need to accessible by the GameEntityFactory
         this->m_areParticlesLooping = true;
-        this->m_numParticleEffects = 1;
+        this->m_numParticleEffects = 10;
 
         CSProfiling::MetricsSystem::ArgData metricsArgData;
+        metricsArgData.m_particleDataDir = in_dataDir;
         // misc particle effect information
         metricsArgData.m_areParticlesLooping = this->m_areParticlesLooping;
         metricsArgData.m_numParticleEffects = this->m_numParticleEffects;
@@ -141,10 +145,10 @@ namespace CSPong
         metricsArgData.m_tmpParticles = 0; // this will only be used if m_isTMPChanging == false
         metricsArgData.m_ppeParticles = 0; // this will only be used if m_isPPEChanging == false
         // only changing variables will use min, max, and step
-        metricsArgData.m_minParticles = 10000;
-        metricsArgData.m_maxParticles = 50000;
-        metricsArgData.m_particlesStep = 2500;
-        metricsArgData.m_ppeStep = 0.25f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
+        metricsArgData.m_minParticles = 5000;
+        metricsArgData.m_maxParticles = 10000;
+        metricsArgData.m_particlesStep = 500;
+        metricsArgData.m_ppeStep = 0.33f; // % of m_particlesStep from 0 to 1 if  m_isPPEChanging == true
         metricsArgData.m_tmpStep = 1.0f; // % of m_particlesStep from 0 to 1 if  m_isTMPChanging == true
         // number of runs per step and how long each run is
         metricsArgData.m_maxRunNum = 1;
@@ -166,7 +170,17 @@ namespace CSPong
     }
     //---------------------------------------------------------
     //---------------------------------------------------------
+    std::string App::GetProfilingDataDir()
+    {
+        std::ostringstream pathOSS;
 
+        time_t rawTime = std::time(nullptr);
+        struct tm timeInfo;
+        LOCALTIME(&timeInfo, &rawTime);
+        pathOSS << "particle-data_" << PUT_TIME(&timeInfo, "%d-%m-%Y_%H-%M-%S");
+        
+        return pathOSS.str();
+    }
     //---------------------------------------------------------
     //---------------------------------------------------------
     void App::OnInit()

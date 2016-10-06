@@ -55,8 +55,10 @@ namespace CSPong
         /// Creates and initializes the Metrics System
         ///
         /// @author Angela Gross
+        ///
+        /// @param The directory to output into
         //---------------------------------------------------------
-        CSProfiling::MetricsSystem* CreateMetricsSystem();
+        CSProfiling::MetricsSystem* CreateMetricsSystem(std::string in_dataDir);
         //---------------------------------------------------------
         /// Creates and initiates the metrics and timing profiling 
         /// systems.
@@ -64,6 +66,12 @@ namespace CSPong
         /// @author Angela Gross
         //---------------------------------------------------------
         void SetupProfilingSystems();
+        //---------------------------------------------------------
+        /// Retrieves the profiling data directory name.
+        ///
+        /// @author Angela Gross
+        //---------------------------------------------------------
+        std::string GetProfilingDataDir();
         //---------------------------------------------------------
         /// Called after all app system have been created allowing
         /// any system dependent initialisation
