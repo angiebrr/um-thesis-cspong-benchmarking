@@ -37,3 +37,4 @@ CSPong/Content/AppResources/Particles/SmokeStream/Generated/
 *.vspx
 *.vsp
 CSPong/Projects/Windows/Build/
+CSPong/Projects/Windows/CSPong.VC.db
