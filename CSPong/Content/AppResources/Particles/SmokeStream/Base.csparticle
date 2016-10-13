@@ -23,16 +23,10 @@
     }, 
     "Duration": "1.0", 
     "Emitter": {
-        "AngleProperty": "0.5", 
-        "EmissionMode": "Burst", 
-        "ParticlesPerEmissionProperty": "0", 
-        "RadiusProperty": {
-            "Curve": "SmoothStepPingPong", 
-            "EndValue": "2.5", 
-            "StartValue": "0.5", 
-            "Type": "Curve"
-        }, 
-        "Type": "Sphere"
+        "EmissionMode": "Stream", 
+        "EmissionRateProperty": "2.0f", 
+        "ParticlesPerEmissionProperty": "0.0", 
+        "Type": "Point"
     }, 
     "InitialSpeedProperty": "1.0", 
     "LifetimeProperty": {
