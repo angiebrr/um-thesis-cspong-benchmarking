@@ -9,7 +9,7 @@ A fork of CSPong, the sample Pong game from [ChilliWorks/CSSamples](https://gith
 
 There are two branches:
 
-- **`master`** still looks and feels like a game, with a UI. Its engine submodule points at my [engine fork](https://github.com/angiebrr/um-thesis-chillisource-engine), which has the Shiny profiling and metrics system.
+- **`main`** still looks and feels like a game, with a UI. Its engine submodule points at my [engine fork](https://github.com/angiebrr/um-thesis-chillisource-engine), which has the Shiny profiling and metrics system.
 - **`automation`** plays the game on its own, stepping through particle counts and emission settings, and writes metrics to CSV. This is the branch that produced the thesis data, run on Windows, iOS, and Android.
 
 **Tech:** C++, ChilliSource, Shiny, Visual Studio, Android, iOS
